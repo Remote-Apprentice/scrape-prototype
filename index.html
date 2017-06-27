@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Backpage Bot</title>
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
   </head>
   <body>
-    <h1>Backpage Bot</h1>
+    <h1 class="text-center">Backpage Bot</h1>
   <script>
       const electron_data = require('electron-data');
 
@@ -77,4 +80,6 @@
     // You can also require other files to run in this process
     require('./renderer.js')
   </script>
+  <script src="libs/jquery-3.2.1.min.js"></script>
+  <script src="libs/bootstrap.min.js"></script>
 </html>
