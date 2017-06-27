@@ -1,1 +1,8 @@
-{"advertisement":{"title":"this is a test title","description":"this is a description","location":"this is a city","email":"user@email.com"}}
+{
+  "advertisement": {
+    "title": "this is a test title",
+    "description": "this is a description",
+    "location": "this is a city",
+    "email": "user@email.com"
+  }
+}

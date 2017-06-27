@@ -62,7 +62,8 @@ const electron_data = require('electron-data');
 
 electron_data.config({
     filename: 'backpage',
-    path: 'data'
+    path: 'data',
+    prettysave: true
 });
 
 electron_data.getOptions()
@@ -73,7 +74,7 @@ electron_data.getOptions()
        filename: 'backpage',
        path: '/data',
        autosave: false,
-       prettysave: false,
+       prettysave: true,
        lastUpdate: false
        }
        */
