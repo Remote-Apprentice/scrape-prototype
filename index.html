@@ -46,7 +46,8 @@
       electron_data.config({
           filename: 'backpage',
           path: 'data',
-          prettysave: true
+          prettysave: true,
+          autosave: true
       });
 
       electron_data.getOptions()
@@ -55,8 +56,8 @@
             /*
              {
              filename: 'backpage',
-             path: '/data',
-             autosave: false,
+             path: 'data',
+             autosave: true,
              prettysave: true,
              lastUpdate: false
              }
@@ -76,10 +77,10 @@
           ;
 
           // Save the data to a JSON file
-          electron_data.save()
+         /* electron_data.save()
               .then(error => {
                   console.log(error); // undefined
-              }).catch((e) => {console.log(e)});
+              }).catch((e) => {console.log(e)});*/
       }
 
 
