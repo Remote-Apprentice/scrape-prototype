@@ -42,15 +42,20 @@
   <script src="libs/bootstrap.min.js"></script>
   <script>
       var jsonfile = require('jsonfile')
-
+      var fs = require('fs');
       var file = 'data/backpage.json'
-
+      var arr = [];
 
 
       function saveData(){
-          var obj = {title: $('#title').val()};
+          arr.push({
+              title: $('#title').val(),
+              description: $('#description').val(),
+              location: $('#location').val(),
+              email: $('#email').val(),
+          });
+          fs.writeFileSync(file, JSON.stringify(arr));
 
-          jsonfile.writeFileSync(file, obj, {flag: 'a'})
       }
 
 
