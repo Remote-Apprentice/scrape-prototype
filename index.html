@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Backpage Bot</title>
     <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
   </head>
   <body>
   <div class="container">
@@ -13,19 +14,19 @@
     <form>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Title">
+        <input type="text" class="form-control" id="title" placeholder="Title" required>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea type="text" class="form-control" id="description"></textarea>
+        <textarea type="text" class="form-control" id="description" required></textarea>
       </div>
       <div class="form-group">
         <label for="location">Location</label>
-        <input type="text" class="form-control" id="location">
+        <input type="text" class="form-control" id="location" placeholder="Location" required>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" class="form-control" id="email" placeholder="Email" required>
       </div>
       <div class="form-group">
         <button class="btn btn-primary form-control" type="submit">Submit</button>
