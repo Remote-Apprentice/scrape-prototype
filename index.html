@@ -38,76 +38,22 @@
     require('./renderer.js')
 
   </script>
-  <script src="libs/jquery-3.2.1.min.js"></script>
+  <script>window.$ = window.jQuery = require('./libs/jquery-3.2.1.min.js');</script>
   <script src="libs/bootstrap.min.js"></script>
   <script>
-      const electron_data = require('electron-data');
+      var jsonfile = require('jsonfile')
 
-      electron_data.config({
-          filename: 'backpage',
-          path: 'data',
-          prettysave: true,
-          autosave: true
-      });
+      var file = 'data/backpage.json'
 
-      electron_data.getOptions()
-          .then(options => {
-              console.log(options);
-            /*
-             {
-             filename: 'backpage',
-             path: 'data',
-             autosave: true,
-             prettysave: true,
-             lastUpdate: false
-             }
-             */
-          });
+
+
       function saveData(){
-          // Store a key => value
-          electron_data.set('advertisement', {
-              "title": document.querySelector('#title').value,
-              "description": 
-document.querySelector('#description').value,
-              "location": document.querySelector('#location').value,
-              "email": document.querySelector('#email').value
-          })
-              .then(data => {
-                  console.log(data); // {'email': 'joedw1978@gmail.com'}
-              }).catch((e) => {console.log(e)})
-          ;
+          var obj = {title: $('#title').val()};
 
-          // Save the data to a JSON file
-         /* electron_data.save()
-              .then(error => {
-                  console.log(error); // undefined
-              }).catch((e) => {console.log(e)});*/
+          jsonfile.writeFileSync(file, obj, {flag: 'a'})
       }
 
 
-      // Check if the data has a value for "email"
-      electron_data.has('advertisement')
-          .then(has_key => {
-              console.log(has_key); // true
-          }).catch((e) => {console.log(e)});
-
-      // Get the value for "my-prop"
-      electron_data.get('advertisement')
-          .then(value => {
-              console.log(value); // {'awesome': 'module'}
-          }).catch((e) => {console.log(e)});
-
-      // Remove "my-prop"
-      electron_data.unset('advertisement')
-          .then(deleted => {
-              console.log(deleted); // true
-          }).catch((e) => {console.log(e)});
-
-      // Clear all data
-      electron_data.clear()
-          .then(data => {
-              console.log(data); // {}
-          }).catch((e) => {console.log(e)});
-  </script>
+   </script>
   </body>
 </html>
