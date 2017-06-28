@@ -66,10 +66,11 @@
       function saveData(){
           // Store a key => value
           electron_data.set('advertisement', {
-              "title": 'this is a test title', //$('#title').val() is not working
-              "description": "this is a description",
-              "location": "this is a city",
-              "email": "user@email.com"
+              "title": document.querySelector('#title').value,
+              "description": 
+document.querySelector('#description').value,
+              "location": document.querySelector('#location').value,
+              "email": document.querySelector('#email').value
           })
               .then(data => {
                   console.log(data); // {'email': 'joedw1978@gmail.com'}
