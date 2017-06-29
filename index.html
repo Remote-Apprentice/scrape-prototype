@@ -29,7 +29,8 @@
         <input type="email" class="form-control" id="email" placeholder="Email" required>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary form-control" type="button" onclick="saveData()">Submit</button>
+        <button class="btn btn-primary form-control" type="button" onclick="saveData()">Save Ad</button><br/><br/>
+        <button class="btn btn-warning form-control" type="button" onclick="startScrape()">Submit Saved Ads to Backpage</button>
       </div>
     </form>
     <ul id="ads">
@@ -53,18 +54,21 @@
      const ads = db('ads').map('title');
 
      for(var x= 0; x< db('ads').size(); x++){
-         $('#ads').append(`<li id="${ads[x]}">` + ads[x] + ` <button class="text-danger" id="delete" onclick="deleteAd(${ads[x].trim()})">x</button></li>`)
+         $('#ads').append(`<li id="${ads[x]}">` + ads[x] + ` <button class="text-danger" id="delete" onclick="deleteAd(${ads[x]})">x</button></li>`)
      }
 
      function saveData(){
          var title = $('#title').val()
+         var desc = $('#description').val()
          var found = db('ads').find({title: title})
-         if(!found){
+         var loc = $('#location').val()
+         var email = $('#email').val()
+         if(!found && title != '' && desc != '' && loc != '' && email != ''){
              db('ads').push({
                  title: title,
-                 description: $('#description').val(),
-                 location: $('#location').val(),
-                 email: $('#email').val(),
+                 description: desc,
+                 location: loc,
+                 email: email,
              })
                  .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title.trim()})">x</button></li>`))
          }
@@ -76,5 +80,12 @@
          $('#' + title.id).remove();
      }
    </script>
+
+  <script>
+
+    function startScrape(){
+        console.log('Posting to backpage...')
+    }
+  </script>
   </body>
 </html>
