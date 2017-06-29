@@ -32,6 +32,9 @@
         <button class="btn btn-primary form-control" type="button" onclick="saveData()">Submit</button>
       </div>
     </form>
+    <ul id="ads">
+
+    </ul>
   </div>
   <script>
     // You can also require other files to run in this process
@@ -41,24 +44,26 @@
   <script>window.$ = window.jQuery = require('./libs/jquery-3.2.1.min.js');</script>
   <script src="libs/bootstrap.min.js"></script>
   <script>
-      var jsonfile = require('jsonfile')
-      var fs = require('fs');
-      var file = 'data/backpage.json'
-      var arr = [];
 
+     const flat = require('node-flat-db');
+     const storage = require('node-flat-db/file-async');
 
-      function saveData(){
-          arr.push({
-              title: $('#title').val(),
-              description: $('#description').val(),
-              location: $('#location').val(),
-              email: $('#email').val(),
-          });
-          fs.writeFileSync(file, JSON.stringify(arr));
+     const db = flat('data/backpage.json', { storage });
 
-      }
+     const ads = db('ads').map('title');
+     for(var x= 0; x< db('ads').size(); x++){
+         $('#ads').append('<li>' + ads[x] + '</li>')
+     }
 
-
+     function saveData(){
+         db('ads').push({
+             title: $('#title').val(),
+             description: $('#description').val(),
+             location: $('#location').val(),
+             email: $('#email').val(),
+         })
+             .then(ad => console.log(ad))
+     }
    </script>
   </body>
 </html>
