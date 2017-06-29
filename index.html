@@ -51,8 +51,9 @@
      const db = flat('data/backpage.json', { storage });
 
      const ads = db('ads').map('title');
+
      for(var x= 0; x< db('ads').size(); x++){
-         $('#ads').append('<li>' + ads[x] + '</li>')
+         $('#ads').append(`<li id="${ads[x]}">` + ads[x] + ` <button class="text-danger" id="delete" onclick="deleteAd(${ads[x].trim()})">x</button></li>`)
      }
 
      function saveData(){
@@ -63,6 +64,10 @@
              email: $('#email').val(),
          })
              .then(ad => console.log(ad))
+     }
+     function deleteAd(title){
+         console.log('deleted', title.id);
+         db('ads').remove({ title: title.id })
      }
    </script>
   </body>
