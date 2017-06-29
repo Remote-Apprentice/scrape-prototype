@@ -58,13 +58,17 @@
 
      function saveData(){
          var title = $('#title').val()
-         db('ads').push({
-             title: title,
-             description: $('#description').val(),
-             location: $('#location').val(),
-             email: $('#email').val(),
-         })
-             .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title.trim()})">x</button></li>`))
+         var found = db('ads').find({title: title})
+         if(!found){
+             db('ads').push({
+                 title: title,
+                 description: $('#description').val(),
+                 location: $('#location').val(),
+                 email: $('#email').val(),
+             })
+                 .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title.trim()})">x</button></li>`))
+         }
+
      }
      function deleteAd(title){
          console.log('deleted', title.id);
