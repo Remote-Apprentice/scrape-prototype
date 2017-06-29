@@ -70,7 +70,7 @@
                  location: loc,
                  email: email,
              })
-                 .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title.trim()})">x</button></li>`))
+                 .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title})">x</button></li>`))
 
              $('#title').val('')
              $('#description').val('')
