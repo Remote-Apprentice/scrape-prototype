@@ -70,21 +70,21 @@
          var title = $('#title').val()
          var desc = $('#description').val()
          var found = db('ads').find({title: title})
-         var loc = $('#location').val()
          var email = $('#email').val()
-         if(!found && title != '' && desc != '' && loc != '' && email != ''){
+         var phone = $('#ephone').val()
+         if(!found && title != '' && desc != '' && phone != '' && email != '' ){
              db('ads').push({
                  title: title,
                  description: desc,
-                 location: loc,
                  email: email,
+                 phone: phone
              })
                  .then(ad => $('#ads').append(`<li id="${title}">` + title + ` <button class="text-danger" id="delete" onclick="deleteAd(${title})">x</button></li>`))
 
              $('#title').val('')
              $('#description').val('')
-             $('#location').val('')
              $('#email').val('')
+             $('#phone').val('')
          }
 
      }
