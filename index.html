@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Backpage Bot</title>
+    <title>Google, Ranker, Wiki Bot</title>
     <link rel="stylesheet" href="libs/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
   </head>
@@ -73,16 +73,20 @@
      const flat = require('node-flat-db');
      const storage = require('node-flat-db/file-async');
 
-     const db = flat('data/proxies.json', { storage });
+     const proxy_db = flat('data/proxies.json', { storage });
+     const wiki_db = flat('data/wiki.json', { storage });
+     const google_db = flat('data/google.json', { storage });
 
-     const proxies = db('proxies').map('name');
-      console.log(proxies)
-     for(var x= 0; x< db('proxies').size(); x++){
-         $('#proxies').append(`<li id="${proxies[x]}">` + proxies[x] + ` <button class="text-danger" id="delete" onclick="deleteProxy(${proxies[x]})">x</button></li>`)
+     const proxies = proxy_db('proxies').map('name');
+
+     if(proxies.length > 0){
+         proxies.filter(function(elem, i, proxies){
+             $('#proxies').append(`<li id="${elem[i]}">` + elem[i] + ` <button class="text-danger" id="delete" onclick="deleteProxy(${elem[i]})">x</button></li>`)
+         })
      }
 
      function addProxy(){
-             db('proxies').push({
+             proxy_db('proxies').push({
                  name: $('#proxy_name').val(),
                  addr: $('#proxy_ip').val(),
                  port: $('#proxy_port').val(),
@@ -104,7 +108,7 @@
      }
      function deleteProxy(proxy){
          console.log('deleted', proxy.id);
-         db('proxies').remove({ name: proxy.id })
+         proxy_db('proxies').remove({ name: proxy.id })
          $('#' + proxy.id).remove();
      }
    </script>
@@ -152,23 +156,37 @@
     }
 
     function getWiki(){
+        var rp = require('request-promise');
         console.log('Scraping Wikipedia...')
-        nightmare
-            .goto('https://google.com')
-            .type('#lst-ib', 'wikipedia ' + $('#search_term').val())
-            .wait(3000)
-            .type('#lst-ib', '\u000d')
-            .wait(3000)
-            /*.wait('#zero_click_wrapper .c-info__title a')
-             .evaluate(function () {
-             return document.querySelector('#zero_click_wrapper .c-info__title a').href;
-             })
-             //.end()*/
-            .then(function (result) {
-                console.log(result);
+        var url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${$('#search_term').val()}&limit=1&format=json`;
+        var options = {
+            uri: url,
+            json: true,
+        };
+        rp(options)
+            .then(function (data) {
+                wiki_db('wiki').push({
+                    data: data
+                }).then(wiki => {
+                    console.log(wiki);
+                    nightmare.goto(data[3][0])
+                        .then(function (result) {
+                            console.log(result);
+                        })
+                        .catch(function (error) {
+                            console.error('Search failed:', error);
+                        });
+                    })
+
+                $('#proxy_name').val('')
+                $('#proxy_ip').val('')
+                $('#proxy_port').val('')
+                $('#proxy_user').val('')
+                $('#proxy_pass').val('')
+                console.log(data[3][0]);
             })
-            .catch(function (error) {
-                console.error('Search failed:', error);
+            .catch(function (err) {
+                console.log('error', err);
             });
     }
   </script>
