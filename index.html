@@ -115,8 +115,7 @@
     function startScrape(){
         console.log('Scraping google...')
         getGoogle();
-        getRanker();
-        getWiki();
+
     }
 
     function getGoogle(){
@@ -130,7 +129,9 @@
              })
              //.end()*/
             .then(function (result) {
+
                 console.log(result);
+                getRanker();
             })
             .catch(function (error) {
                 console.error('Search failed:', error);
@@ -139,12 +140,12 @@
 
     function getRanker(){
         console.log('Scraping Ranker...not working without proxy')
+        getWiki();
     }
 
     function getWiki(){
         console.log('Scraping Wikipedia...')
         nightmare
-            .wait(10000)
             .goto('https://google.com')
             .type('#lst-ib', 'wikipedia ' + $('#search_term').val())
             .type('#lst-ib', '\u000d')
