@@ -20,6 +20,7 @@
     "electron": "~1.6.2"
   },
   "dependencies": {
+    "json2xls": "^0.1.2",
     "nightmare": "2.7.0",
     "node-flat-db": "^0.2.1",
     "request-promise": "^4.2.1"

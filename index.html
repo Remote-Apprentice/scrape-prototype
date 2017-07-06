@@ -57,6 +57,9 @@
 
 
     </form>
+    <div class="form-group">
+      <button class="btn btn-primary form-control" type="button" onclick="dbToCsv()">Db to Excel</button><br/><br/>
+    </div>
     <ul id="proxies">
 
     </ul>
@@ -165,29 +168,34 @@
         };
         rp(options)
             .then(function (data) {
-                wiki_db('wiki').push({
-                    data: data
-                }).then(wiki => {
-                    console.log(wiki);
-                    nightmare.goto(data[3][0])
-                        .then(function (result) {
-                            console.log(result);
+                console.log(data)
+                nightmare.goto(data[3][0])
+                    .then(function (result) {
+                        console.log(result.url);
+                        wiki_db('wiki').push({
+                            url: result.url,
                         })
-                        .catch(function (error) {
-                            console.error('Search failed:', error);
-                        });
-                    })
 
-                $('#proxy_name').val('')
-                $('#proxy_ip').val('')
-                $('#proxy_port').val('')
-                $('#proxy_user').val('')
-                $('#proxy_pass').val('')
-                console.log(data[3][0]);
+                    })
+                    .catch(function (error) {
+                        console.error('Search failed:', error);
+                    });
+
+                $('#search_term').val('')
+
+
             })
             .catch(function (err) {
                 console.log('error', err);
             });
+    }
+    function dbToCsv(){
+        var json2xls = require('json2xls');
+        var wiki = require('./data/wiki.json');
+        console.log(wiki.wiki[0].url);
+        var fs = require('fs')
+        var xls = json2xls(wiki.wiki);
+        fs.writeFileSync('wiki.xlsx', xls, 'binary');
     }
   </script>
   </body>
