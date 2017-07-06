@@ -126,6 +126,7 @@
              return document.querySelector('#zero_click_wrapper .c-info__title a').href;
              })
              //.end()*/
+            .wait(3000)
             .then(function (result) {
 
                 console.log(result);
@@ -146,7 +147,9 @@
         nightmare
             .goto('https://google.com')
             .type('#lst-ib', 'wikipedia ' + $('#search_term').val())
+            .wait(3000)
             .type('#lst-ib', '\u000d')
+            .wait(3000)
             /*.wait('#zero_click_wrapper .c-info__title a')
              .evaluate(function () {
              return document.querySelector('#zero_click_wrapper .c-info__title a').href;
