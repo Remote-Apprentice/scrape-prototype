@@ -113,12 +113,12 @@
       var Nightmare = require('nightmare');
       var nightmare = Nightmare({ show: true });
     function startScrape(){
-        console.log('Scraping google...')
         getGoogle();
 
     }
 
     function getGoogle(){
+        console.log('Scraping google...')
         nightmare
             .goto('https://www.google.com/search?q='+ $('#search_term').val() +'&source=lnms&tbm=isch&sa=X&ved=0ahUKEwim7omav_PUAhWFKyYKHVkKBAkQ_AUICygC&biw=1059&bih=914')
             /*.wait('#zero_click_wrapper .c-info__title a')
@@ -139,7 +139,22 @@
 
     function getRanker(){
         console.log('Scraping Ranker...not working without proxy')
-        getWiki();
+        nightmare
+            .goto('https://ranker.com')
+            /*.wait('#zero_click_wrapper .c-info__title a')
+             .evaluate(function () {
+             return document.querySelector('#zero_click_wrapper .c-info__title a').href;
+             })
+             //.end()*/
+            .then(function (result) {
+                console.log(result);
+                //getWiki();
+            })
+            .catch(function (error) {
+                console.error('Search failed:', error);
+                getWiki();
+            });
+
     }
 
     function getWiki(){
