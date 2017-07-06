@@ -110,21 +110,49 @@
    </script>
 
   <script>
-
+      var Nightmare = require('nightmare');
+      var nightmare = Nightmare({ show: true });
     function startScrape(){
         console.log('Scraping google...')
-        var Nightmare = require('nightmare');
-        var nightmare = Nightmare({ show: true });
+        getGoogle();
+        getRanker();
+        getWiki();
+    }
 
+    function getGoogle(){
         nightmare
             .goto('https://google.com')
             .type('#lst-ib', $('#search_term').val())
             .type('#lst-ib', '\u000d')
             /*.wait('#zero_click_wrapper .c-info__title a')
-            .evaluate(function () {
-                return document.querySelector('#zero_click_wrapper .c-info__title a').href;
+             .evaluate(function () {
+             return document.querySelector('#zero_click_wrapper .c-info__title a').href;
+             })
+             //.end()*/
+            .then(function (result) {
+                console.log(result);
             })
-            //.end()*/
+            .catch(function (error) {
+                console.error('Search failed:', error);
+            });
+    }
+
+    function getRanker(){
+        console.log('Scraping Ranker...not working without proxy')
+    }
+
+    function getWiki(){
+        console.log('Scraping Wikipedia...')
+        nightmare
+            .wait(10000)
+            .goto('https://google.com')
+            .type('#lst-ib', 'wikipedia ' + $('#search_term').val())
+            .type('#lst-ib', '\u000d')
+            /*.wait('#zero_click_wrapper .c-info__title a')
+             .evaluate(function () {
+             return document.querySelector('#zero_click_wrapper .c-info__title a').href;
+             })
+             //.end()*/
             .then(function (result) {
                 console.log(result);
             })
