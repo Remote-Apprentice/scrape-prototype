@@ -79,6 +79,7 @@
      const proxy_db = flat('data/proxies.json', { storage });
      const wiki_db = flat('data/wiki.json', { storage });
      const google_db = flat('data/google.json', { storage });
+     const ranker_db = flat('data/ranker.json', { storage });
 
      const proxies = proxy_db('proxies').map('name');
 
