@@ -121,14 +121,8 @@
         console.log('Scraping google...')
         nightmare
             .goto('https://www.google.com/search?q='+ $('#search_term').val() +'&source=lnms&tbm=isch&sa=X&ved=0ahUKEwim7omav_PUAhWFKyYKHVkKBAkQ_AUICygC&biw=1059&bih=914')
-            /*.wait('#zero_click_wrapper .c-info__title a')
-             .evaluate(function () {
-             return document.querySelector('#zero_click_wrapper .c-info__title a').href;
-             })
-             //.end()*/
             .wait(3000)
             .then(function (result) {
-
                 console.log(result);
                 getRanker();
             })
